@@ -4,9 +4,10 @@ using System.Collections;
 public class Done_Mover : MonoBehaviour
 {
 	public float speed;
+	public Vector3 direction;
 
 	void Start ()
 	{
-		GetComponent<Rigidbody> ().velocity = transform.forward * Random.Range (-speed, speed);
+		GetComponent<Rigidbody> ().velocity = direction * speed;
 	}
 }

@@ -44,7 +44,23 @@ public class Done_GameController : MonoBehaviour
 		while (true) {
 			for (int i = 0; i < hazardCount; i++) {
 				GameObject hazard = hazards [Random.Range (0, hazards.Length)];
-				Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), Random.Range (-spawnValues.y, spawnValues.y), spawnValues.z);
+				Vector3 spawnPosition;
+				if (i % 4 == 0) {
+					spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+					hazard.GetComponent<Done_Mover> ().direction = transform.forward;
+				} else if (i % 4 == 1) {
+					spawnPosition = new Vector3 (-spawnValues.x, spawnValues.y, Random.Range (-spawnValues.z, spawnValues.z));
+					hazard.GetComponent<Done_Mover> ().direction = -transform.right;
+				} else if (i % 4 == 2) {
+					spawnPosition = new Vector3 (spawnValues.x, spawnValues.y, Random.Range (-spawnValues.z, spawnValues.z));
+					hazard.GetComponent<Done_Mover> ().direction = transform.right;
+				} else {
+					spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, -spawnValues.z);
+					hazard.GetComponent<Done_Mover> ().direction = -transform.forward;
+				}
+				Vector3 buffer = new Vector3 (Random.Range (-0.5f, 0.5f), 0, Random.Range (-0.5f, 0.5f));
+				hazard.GetComponent<Done_Mover> ().direction += buffer;
+
 				Quaternion spawnRotation = Quaternion.identity;
 				Instantiate (hazard, spawnPosition, spawnRotation);
 				yield return new WaitForSeconds (spawnWait);
